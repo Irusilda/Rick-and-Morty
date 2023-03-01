@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.Rick_and_Morty.Launcher" parent="Theme.SplashScreen">
+        <!--    <item name="windowNoTitle">true</item>-->
+        <!--    <item name="windowActionBar">false</item>-->
+        <item name="windowSplashScreenBackground">@color/second_color</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/launch_screen</item>
+        <item name="postSplashScreenTheme">@style/Theme.Rick_and_Morty</item>
+    </style>
+</resources>
