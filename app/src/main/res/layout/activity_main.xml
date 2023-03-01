@@ -16,14 +16,16 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/bottom_navigation"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/bootom_navigation"
         android:background="@color/main_color"
         app:itemIconTint="@color/second_color"
-        app:itemTextColor="@color/second_color"/>
+        app:itemTextColor="@color/second_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_navigation" />
 
     <FrameLayout
         android:id="@+id/place_holder"
