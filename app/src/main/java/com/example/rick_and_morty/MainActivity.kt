@@ -1,12 +1,11 @@
 package com.example.rick_and_morty
 
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import androidx.activity.OnBackPressedCallback
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -41,10 +40,10 @@ class MainActivity : AppCompatActivity(), Navigator {
     private val delay = 2000L
     private val handler = Handler(Looper.getMainLooper())
 
-    @RequiresApi(Build.VERSION_CODES.S)
     override fun onCreate(savedInstanceState: Bundle?) {
 
         val splashScreen = installSplashScreen()
+        Log.d("MyLog", "$splashScreen")
         splashScreen.setKeepOnScreenCondition { keep }
         handler.postDelayed({
             keep = false
@@ -54,6 +53,7 @@ class MainActivity : AppCompatActivity(), Navigator {
         binding = ActivityMainBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        Log.d("MyLog", "onCreate")
 
         toolbar = binding.root.findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
