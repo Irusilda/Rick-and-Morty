@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:elevation="20dp"
+    app:cardCornerRadius="20dp"
+    android:backgroundTint="#888786"
+    android:padding="16dp"
+    android:id="@+id/item_character">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:layout_margin="8dp">
+
+        <TextView
+            android:id="@+id/nameCharacter"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/character_name_title"
+            app:layout_constraintEnd_toEndOf="@+id/imageCharacter"
+            app:layout_constraintHorizontal_bias="0.51"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageCharacter"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/characters"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/speciesCharacter"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/character_species_title"
+            app:layout_constraintEnd_toEndOf="@+id/imageCharacter"
+            app:layout_constraintStart_toStartOf="@+id/imageCharacter"
+            app:layout_constraintTop_toBottomOf="@+id/imageCharacter"/>
+
+        <TextView
+            android:id="@+id/statusCharacter"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/character_status_title"
+            app:layout_constraintEnd_toEndOf="@+id/speciesCharacter"
+            app:layout_constraintStart_toStartOf="@+id/speciesCharacter"
+            app:layout_constraintTop_toBottomOf="@+id/speciesCharacter"/>
+
+        <TextView
+            android:id="@+id/genderCharacter"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/character_gender_title"
+            app:layout_constraintEnd_toEndOf="@+id/statusCharacter"
+            app:layout_constraintStart_toStartOf="@+id/statusCharacter"
+            app:layout_constraintTop_toBottomOf="@+id/statusCharacter"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
