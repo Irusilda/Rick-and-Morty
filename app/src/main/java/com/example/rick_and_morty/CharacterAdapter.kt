@@ -1,7 +1,6 @@
 package com.example.rick_and_morty
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -11,7 +10,7 @@ import com.example.rick_and_morty.retrofit.RetrofitData
 
 import com.squareup.picasso.Picasso
 
-class CharacterAdapter (private val context: Context, private var itemCharacterData: RetrofitData) : RecyclerView.Adapter<CharacterAdapter.MyViewHolder>() {
+class CharacterAdapter(private var itemCharacterData: RetrofitData) : RecyclerView.Adapter<CharacterAdapter.MyViewHolder>() {
 
 
     class MyViewHolder(val binding: ItemCharacterBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -28,8 +27,11 @@ class CharacterAdapter (private val context: Context, private var itemCharacterD
 
         val item = itemCharacterData.results[position]
         with(holder.binding) {
-            val text = context.getString(R.string.character_name_title) + item.name
-            nameCharacter.text = text
+           nameCharacter.text = item.name
+            speciesCharacter.text = item.species
+            statusCharacter.text = item.status
+            genderCharacter.text = item.gender
+
 
             Picasso.get().load(item.image).into(imageCharacter)
         }

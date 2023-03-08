@@ -1,9 +1,10 @@
 package com.example.rick_and_morty.retrofit
 
-import retrofit2.Call
+import io.reactivex.Single
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 interface ServiceCharacter {
-    @GET("character")
-    fun getCharacter(): Call <RetrofitData>
+    @GET("{value}")
+    fun getValue(@Path("value") query: String): Single <RetrofitData>
 }

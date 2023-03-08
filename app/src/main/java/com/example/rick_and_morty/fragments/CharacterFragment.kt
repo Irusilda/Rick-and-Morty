@@ -8,16 +8,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.example.rick_and_morty.*
 import com.example.rick_and_morty.databinding.FragmentCharacterBinding
-import com.example.rick_and_morty.retrofit.Common
 import com.example.rick_and_morty.retrofit.RetrofitData
-import com.example.rick_and_morty.retrofit.ServiceCharacter
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import io.reactivex.SingleObserver
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 
 class CharacterFragment : Fragment(), CustomTitle {
+
     lateinit var binding: FragmentCharacterBinding
-    var mService: ServiceCharacter = Common.retrofitService
     lateinit var adapter: CharacterAdapter
 
     override fun onCreateView(
@@ -32,28 +30,8 @@ class CharacterFragment : Fragment(), CustomTitle {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        getResult()
 
-        mService.getCharacter().enqueue(object : Callback<RetrofitData> {
-
-            override fun onResponse(
-                call: Call<RetrofitData>,
-                response: Response<RetrofitData>
-            ) {
-                adapter = context?.let { CharacterAdapter(it, response.body()!!) }!!
-                binding.characterRecycler.adapter = adapter
-            }
-
-            override fun onFailure(call: Call<RetrofitData>, t: Throwable) {
-                Toast.makeText(context, "Что-то пошло не так", Toast.LENGTH_LONG).show()
-            }
-
-        })
-//        val retr = RetrofitClass()
-//        retr.getCharacterResult()
-//        val result = retr.characterResult
-//
-//        adapter = context?.let { CharacterAdapter(it, result) }!!
-//        binding.characterRecycler.adapter = adapter
     }
 
     companion object {
@@ -63,4 +41,24 @@ class CharacterFragment : Fragment(), CustomTitle {
     }
 
     override fun getTitleRes(): Int = R.string.characters
+
+    private fun getResult() {
+        val observer = object : SingleObserver<RetrofitData> {
+            override fun onSubscribe(d: Disposable) {
+
+            }
+
+            override fun onSuccess(itemList: RetrofitData) {
+                adapter = CharacterAdapter(itemList)
+                binding.characterRecycler.adapter = adapter
+            }
+
+            override fun onError(e: Throwable) {
+                Toast.makeText(context, "e", Toast.LENGTH_LONG).show()
+            }
+        }
+        MyRepositoryProvider.provideMyRepository().searchValue("character")
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(observer)
+    }
 }
