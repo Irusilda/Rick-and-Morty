@@ -1,6 +1,6 @@
 package com.example.rick_and_morty
 
-import android.annotation.SuppressLint
+
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -10,10 +10,18 @@ import com.example.rick_and_morty.retrofit.RetrofitData
 
 import com.squareup.picasso.Picasso
 
-class CharacterAdapter(private var itemCharacterData: RetrofitData) : RecyclerView.Adapter<CharacterAdapter.MyViewHolder>() {
+class CharacterAdapter(
+        private var itemCharacterData: RetrofitData
+) : RecyclerView.Adapter<CharacterAdapter.MyViewHolder>() {
 
 
     class MyViewHolder(val binding: ItemCharacterBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind (item: RetrofitData, listener: OnItemClickListener?) {
+            itemView.setOnClickListener {
+                listener?.onItemClick(item)
+            }
+        }
+
 
     }
 
@@ -22,12 +30,11 @@ class CharacterAdapter(private var itemCharacterData: RetrofitData) : RecyclerVi
         return MyViewHolder(binding)
     }
 
-    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
         val item = itemCharacterData.results[position]
         with(holder.binding) {
-           nameCharacter.text = item.name
+            nameCharacter.text = item.name
             speciesCharacter.text = item.species
             statusCharacter.text = item.status
             genderCharacter.text = item.gender

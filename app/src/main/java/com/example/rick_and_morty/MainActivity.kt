@@ -8,11 +8,13 @@ import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.rick_and_morty.databinding.ActivityMainBinding
 import com.example.rick_and_morty.fragments.CharacterFragment
+import com.example.rick_and_morty.fragments.DetailsCharacterFragment
 import com.example.rick_and_morty.fragments.EpisodesFragment
 import com.example.rick_and_morty.fragments.LocationsFragment
 
@@ -48,6 +50,7 @@ class MainActivity : AppCompatActivity(), Navigator {
         handler.postDelayed({
             keep = false
             showCharacterFragment()
+            setSelectedColor()
         }, delay)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -59,6 +62,8 @@ class MainActivity : AppCompatActivity(), Navigator {
         setSupportActionBar(toolbar)
 
         binding.bottomNavigation.setOnItemSelectedListener { it ->
+            it.isChecked = true
+            setSelectedColor()
             when (it.itemId) {
                 R.id.characters -> showCharacterFragment()
                 R.id.locations -> showLocationsFragment()
@@ -98,7 +103,7 @@ class MainActivity : AppCompatActivity(), Navigator {
     override fun backPressed() {
         val callBack = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if (currentFragment is CharacterFragment )
+                if (currentFragment is CharacterFragment)
                     finish()
                 else {
                     launchFragment(CharacterFragment.newInstance())
@@ -108,9 +113,24 @@ class MainActivity : AppCompatActivity(), Navigator {
         onBackPressedDispatcher.addCallback(this, callBack)
     }
 
+    override fun showDetailCharacterFragment() {
+        launchFragment(DetailsCharacterFragment.newInstance())
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         supportFragmentManager.unregisterFragmentLifecycleCallbacks(fragmentListener)
+    }
+
+    private fun setSelectedColor() {
+        with(binding.bottomNavigation) {
+            val selectedColor = ContextCompat.getColorStateList(
+                this@MainActivity,
+                R.color.bottom_nav_selected_color
+            )
+            itemTextColor = selectedColor
+            itemIconTintList = selectedColor
+        }
     }
 
 }

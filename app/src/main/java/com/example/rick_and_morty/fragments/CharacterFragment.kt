@@ -54,7 +54,7 @@ class CharacterFragment : Fragment(), CustomTitle {
             }
 
             override fun onError(e: Throwable) {
-                Toast.makeText(context, "e", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, "$e", Toast.LENGTH_LONG).show()
             }
         }
         MyRepositoryProvider.provideMyRepository().searchValue("character")

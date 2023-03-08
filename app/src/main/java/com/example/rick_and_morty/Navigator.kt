@@ -16,5 +16,7 @@ interface Navigator {
 
     fun backPressed()
 
+    fun showDetailCharacterFragment()
+
 
 }
