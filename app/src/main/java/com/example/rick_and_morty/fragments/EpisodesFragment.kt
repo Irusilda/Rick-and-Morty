@@ -42,7 +42,7 @@ class EpisodesFragment : Fragment(), CustomTitle, OnEpisodeClickListener {
 
             override fun onSuccess(itemList: EpisodeData) {
                 adapter = EpisodesAdapter(this@EpisodesFragment).apply {
-                    itemEpisodesList = itemList
+                    itemEpisodesList = itemList.results
                 }
                 binding.episodeMainRecycler.adapter = adapter
             }

@@ -5,10 +5,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rick_and_morty.databinding.ItemCharacterBinding
-import com.example.rick_and_morty.retrofit.ResultCharacter
 import com.example.rick_and_morty.retrofit.CharacterData
-
-
+import com.example.rick_and_morty.retrofit.ResultCharacter
 import com.squareup.picasso.Picasso
 
 class CharacterAdapter(
