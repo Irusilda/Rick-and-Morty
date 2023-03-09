@@ -1,8 +1,11 @@
 package com.example.rick_and_morty
 
-import com.example.rick_and_morty.retrofit.RetrofitData
+import com.example.rick_and_morty.retrofit.CharacterData
+import com.example.rick_and_morty.retrofit.EpisodeData
 import io.reactivex.Single
 
 interface Repository {
-    fun searchValue(value: String): Single<RetrofitData>
+    fun searchValue(value: String): Single<CharacterData>
+
+    fun searchEpisode(): Single<EpisodeData>
 }

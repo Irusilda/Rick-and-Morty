@@ -5,18 +5,21 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rick_and_morty.databinding.ItemCharacterBinding
-import com.example.rick_and_morty.retrofit.RetrofitData
+import com.example.rick_and_morty.retrofit.ResultCharacter
+import com.example.rick_and_morty.retrofit.CharacterData
 
 
 import com.squareup.picasso.Picasso
 
 class CharacterAdapter(
-        private var itemCharacterData: RetrofitData
+    private val listener: OnItemClickListener?
+
 ) : RecyclerView.Adapter<CharacterAdapter.MyViewHolder>() {
 
+    lateinit var itemCharacterData: CharacterData
 
     class MyViewHolder(val binding: ItemCharacterBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind (item: RetrofitData, listener: OnItemClickListener?) {
+        fun bind(item: ResultCharacter, listener: OnItemClickListener?) {
             itemView.setOnClickListener {
                 listener?.onItemClick(item)
             }
@@ -38,6 +41,7 @@ class CharacterAdapter(
             speciesCharacter.text = item.species
             statusCharacter.text = item.status
             genderCharacter.text = item.gender
+            holder.bind(item, listener)
 
 
             Picasso.get().load(item.image).into(imageCharacter)

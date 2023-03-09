@@ -4,10 +4,10 @@ import android.os.Parcel
 import android.os.Parcelable
 
 
-data class RetrofitData(
-    val results: List<Result>
+data class CharacterData(
+    var results: List<ResultCharacter>
 ): Parcelable {
-    constructor(parcel: Parcel) : this(parcel.createTypedArrayList(Result)!!) {
+    constructor(parcel: Parcel) : this(parcel.createTypedArrayList(ResultCharacter)!!) {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -18,19 +18,19 @@ parcel.writeTypedList(results)
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<RetrofitData> {
-        override fun createFromParcel(parcel: Parcel): RetrofitData {
-            return RetrofitData(parcel)
+    companion object CREATOR : Parcelable.Creator<CharacterData> {
+        override fun createFromParcel(parcel: Parcel): CharacterData {
+            return CharacterData(parcel)
         }
 
-        override fun newArray(size: Int): Array<RetrofitData?> {
+        override fun newArray(size: Int): Array<CharacterData?> {
             return arrayOfNulls(size)
         }
     }
 }
 
 
-data class Result(
+data class ResultCharacter(
     val created: String,
     val episode: List<String>,
     val gender: String,
@@ -77,12 +77,12 @@ data class Result(
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<Result> {
-        override fun createFromParcel(parcel: Parcel): Result {
-            return Result(parcel)
+    companion object CREATOR : Parcelable.Creator<ResultCharacter> {
+        override fun createFromParcel(parcel: Parcel): ResultCharacter {
+            return ResultCharacter(parcel)
         }
 
-        override fun newArray(size: Int): Array<Result?> {
+        override fun newArray(size: Int): Array<ResultCharacter?> {
             return arrayOfNulls(size)
         }
     }

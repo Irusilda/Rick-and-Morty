@@ -1,11 +1,13 @@
 package com.example.rick_and_morty
 
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.View
 import androidx.activity.OnBackPressedCallback
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
@@ -17,6 +19,8 @@ import com.example.rick_and_morty.fragments.CharacterFragment
 import com.example.rick_and_morty.fragments.DetailsCharacterFragment
 import com.example.rick_and_morty.fragments.EpisodesFragment
 import com.example.rick_and_morty.fragments.LocationsFragment
+import com.example.rick_and_morty.retrofit.ResultCharacter
+
 
 class MainActivity : AppCompatActivity(), Navigator {
 
@@ -113,8 +117,9 @@ class MainActivity : AppCompatActivity(), Navigator {
         onBackPressedDispatcher.addCallback(this, callBack)
     }
 
-    override fun showDetailCharacterFragment() {
-        launchFragment(DetailsCharacterFragment.newInstance())
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    override fun showDetailCharacterFragment(details: ResultCharacter) {
+        launchFragment(DetailsCharacterFragment.newInstance(details))
     }
 
     override fun onDestroy() {

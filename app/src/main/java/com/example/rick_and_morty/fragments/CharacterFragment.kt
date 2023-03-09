@@ -1,6 +1,7 @@
 package com.example.rick_and_morty.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -8,12 +9,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.example.rick_and_morty.*
 import com.example.rick_and_morty.databinding.FragmentCharacterBinding
-import com.example.rick_and_morty.retrofit.RetrofitData
+import com.example.rick_and_morty.retrofit.ResultCharacter
+import com.example.rick_and_morty.retrofit.CharacterData
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 
-class CharacterFragment : Fragment(), CustomTitle {
+class CharacterFragment : Fragment(), CustomTitle, OnItemClickListener {
 
     lateinit var binding: FragmentCharacterBinding
     lateinit var adapter: CharacterAdapter
@@ -43,13 +45,15 @@ class CharacterFragment : Fragment(), CustomTitle {
     override fun getTitleRes(): Int = R.string.characters
 
     private fun getResult() {
-        val observer = object : SingleObserver<RetrofitData> {
+        val observer = object : SingleObserver<CharacterData> {
             override fun onSubscribe(d: Disposable) {
 
             }
 
-            override fun onSuccess(itemList: RetrofitData) {
-                adapter = CharacterAdapter(itemList)
+            override fun onSuccess(itemList: CharacterData) {
+                adapter = CharacterAdapter(this@CharacterFragment).apply {
+                    itemCharacterData = itemList
+                }
                 binding.characterRecycler.adapter = adapter
             }
 
@@ -60,5 +64,10 @@ class CharacterFragment : Fragment(), CustomTitle {
         MyRepositoryProvider.provideMyRepository().searchValue("character")
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(observer)
+    }
+
+    override fun onItemClick(item: ResultCharacter) {
+        Log.d("MyLog", "Details")
+        navigator().showDetailCharacterFragment(item)
     }
 }
