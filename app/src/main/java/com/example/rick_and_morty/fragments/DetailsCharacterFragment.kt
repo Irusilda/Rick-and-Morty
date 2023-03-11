@@ -1,6 +1,7 @@
 package com.example.rick_and_morty.fragments
 
 import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -18,10 +19,15 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
+private const val CHARACTER_ITEM_KEY = "key"
+
 class DetailsCharacterFragment : Fragment(), OnEpisodeClickListener {
+
+
 
     lateinit var binding: FragmentDetailsCharacterBinding
     lateinit var adapter: EpisodesAdapter
+    lateinit var characterItem: ResultCharacter
     var newList: MutableList<ResultEpisode> = arrayListOf()
 
     override fun onCreateView(
@@ -34,21 +40,28 @@ class DetailsCharacterFragment : Fragment(), OnEpisodeClickListener {
     }
 
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val item = arguments?.getParcelable<ResultCharacter>("KEY")!!
+
+        characterItem = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+            arguments?.getParcelable<ResultCharacter>(CHARACTER_ITEM_KEY)!!
+        } else {
+            arguments?.getParcelable(CHARACTER_ITEM_KEY, ResultCharacter::class.java)!!
+
+        }
         binding.apply {
 
-            Picasso.get().load(item.image).into(imageCharDetails)
-            nameCharDetails.text = item.name
-            statusCharDetails.text = item.status
-            speciesCharDetails.text = item.species
-            type.text = item.type
-            genderCharDetails.text = item.gender
-            origin.text = item.origin.name
-            location.text = item.location.name
+            Picasso.get().load(characterItem.image).into(imageCharDetails)
+            nameCharDetails.text = characterItem.name
+            statusCharDetails.text = characterItem.status
+            speciesCharDetails.text = characterItem.species
+            type.text = characterItem.type
+            genderCharDetails.text = characterItem.gender
+            origin.text = characterItem.origin.name
+            location.text = characterItem.location.name
 
-            val list = item.episode
+            val list = characterItem.episode
             val listOfId = mutableListOf<Int>()
             for (i in list) {
                 val addItem = i.substringAfterLast("/")
@@ -57,9 +70,9 @@ class DetailsCharacterFragment : Fragment(), OnEpisodeClickListener {
             Log.d("MyLog", "$listOfId")
             getResult(listOfId)
         }
-    }
+}
 
-    @SuppressLint("CheckResult")
+@SuppressLint("CheckResult")
     private fun getResult(listOfId: List<Int>) {
 
         Observable.fromIterable(listOfId)
@@ -84,7 +97,7 @@ class DetailsCharacterFragment : Fragment(), OnEpisodeClickListener {
 
         fun newInstance(item: ResultCharacter): DetailsCharacterFragment {
             val args = Bundle().apply {
-                putParcelable("KEY", item)
+                putParcelable(CHARACTER_ITEM_KEY, item)
             }
 
             val fragment = DetailsCharacterFragment()

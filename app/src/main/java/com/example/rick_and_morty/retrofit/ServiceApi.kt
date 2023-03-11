@@ -5,7 +5,7 @@ import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-interface ServiceAPI {
+interface ServiceApi {
     @GET("{value}")
     fun getValue(@Path("value") query: String): Single<CharacterData>
 

@@ -3,11 +3,11 @@ package com.example.rick_and_morty
 import com.example.rick_and_morty.retrofit.CharacterData
 import com.example.rick_and_morty.retrofit.EpisodeData
 import com.example.rick_and_morty.retrofit.ResultEpisode
-import com.example.rick_and_morty.retrofit.ServiceAPI
+import com.example.rick_and_morty.retrofit.ServiceApi
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 
-class RepositoryImpl(private val newSearch: ServiceAPI): Repository {
+class RepositoryImpl(private val newSearch: ServiceApi): Repository {
     override fun searchValue(value: String): Single<CharacterData> {
         return newSearch.getValue(value)
             .subscribeOn(Schedulers.io())
